@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tasky_project/tasks_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -69,13 +70,20 @@ class HomeScreen extends StatelessWidget {
               TextField(
                 cursorColor: const Color(0xFFFFFFFF),
                 style: Theme.of(context).textTheme.displaySmall,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'e.g. Sarah Khalid',
                 ),
               ),
               SizedBox(height: 24),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TasksScreen(),
+                    ),
+                  );
+                },
                 child: Text('Let’s Get Started'),
               ),
             ],
