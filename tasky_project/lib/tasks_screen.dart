@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'add_task_screen.dart';
 
 class TasksScreen extends StatelessWidget {
-  const TasksScreen({super.key});
+  final String? name;
+
+  const TasksScreen({super.key, this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class TasksScreen extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      'Good Evening ,Monica',
+                      'Good Evening ,$name',
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
                     Text('One task at a time.One step closer.',

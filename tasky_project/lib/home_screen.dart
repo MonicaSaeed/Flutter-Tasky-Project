@@ -1,81 +1,99 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky_project/core/components/custom_form_field.dart';
 import 'package:tasky_project/tasks_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
+  HomeScreen({super.key});
+  final TextEditingController nameController = TextEditingController();
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              SizedBox(height: 70),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _key,
+              child: Column(
                 children: [
-                  SvgPicture.asset(
-                    'assets/images/logo.svg',
-                    width: 42,
-                    height: 42,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/images/logo.svg',
+                        width: 42,
+                        height: 42,
+                      ),
+                      SizedBox(width: 16),
+                      Text(
+                        'Tasky',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.displayLarge,
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 16),
+                  SizedBox(height: 108),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Welcome To Tasky',
+                        style: Theme.of(context).textTheme.displayMedium,
+                      ),
+                      SvgPicture.asset(
+                        'assets/images/waving-hand.svg',
+                        width: 28,
+                        height: 28,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
                   Text(
-                    'Tasky',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.displayLarge,
+                    'Your productivity journey starts here.',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  SizedBox(height: 24),
+                  SvgPicture.asset(
+                    'assets/images/pana.svg',
+                    width: 215,
+                    height: 205,
+                  ),
+                  SizedBox(height: 28),
+                  CustomFormField(
+                    title: 'Full Name',
+                    hintText: 'e.g. Sarah Khalid',
+                    controller: nameController,
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your name';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 24),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_key.currentState?.validate() ?? false) {
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                TasksScreen(name: nameController.text),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text('Let’s Get Started'),
                   ),
                 ],
               ),
-              SizedBox(height: 108),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Welcome To Tasky',
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                  SvgPicture.asset(
-                    'assets/images/waving-hand.svg',
-                    width: 28,
-                    height: 28,
-                  ),
-                ],
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Your productivity journey starts here.',
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
-              SizedBox(height: 24),
-              SvgPicture.asset(
-                'assets/images/pana.svg',
-                width: 215,
-                height: 205,
-              ),
-              SizedBox(height: 28),
-              CustomFormField(
-                  title: 'Full Name',
-                  hintText: 'e.g. Sarah Khalid',
-                  controller: TextEditingController()),
-              SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const TasksScreen(),
-                    ),
-                  );
-                },
-                child: Text('Let’s Get Started'),
-              ),
-            ],
+            ),
           ),
         ),
       ),

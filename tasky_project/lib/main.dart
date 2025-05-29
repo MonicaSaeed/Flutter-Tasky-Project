@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky_project/tasks_screen.dart';
 
 import 'home_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Ensures binding is ready
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? name = prefs.getString('username');
+  runApp(MyApp(name: name));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String? name;
+  const MyApp({super.key, this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +105,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const HomeScreen(),
+      home: name == null ? HomeScreen() : TasksScreen(name: name),
     );
   }
 }

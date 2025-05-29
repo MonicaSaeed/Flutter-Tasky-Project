@@ -4,7 +4,7 @@ class CustomFormField extends StatelessWidget {
   final String hintText;
   final int maxLines;
   final String title;
-  final Function(String?)? validator;
+  final FormFieldValidator<String>? validator;
   final TextEditingController controller;
 
   const CustomFormField({
@@ -26,13 +26,15 @@ class CustomFormField extends StatelessWidget {
           style: Theme.of(context).textTheme.displaySmall,
         ),
         SizedBox(height: 8),
-        TextField(
+        TextFormField(
           cursorColor: const Color(0xFFFFFFFF),
           maxLines: maxLines,
           style: Theme.of(context).textTheme.displaySmall,
           decoration: InputDecoration(
             hintText: hintText,
           ),
+          validator: validator,
+          controller: controller,
         ),
       ],
     );
