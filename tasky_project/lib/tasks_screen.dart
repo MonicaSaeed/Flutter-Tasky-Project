@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky_project/core/components/custom_task_details.dart';
 import 'package:tasky_project/core/models/task_model.dart';
 
 import 'add_task_screen.dart';
@@ -120,35 +121,13 @@ class _TasksScreenState extends State<TasksScreen> {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 8),
                     child: Container(
-                      height: 60,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF282828),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                task.name,
-                                style: Theme.of(context).textTheme.displaySmall,
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                task.description,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displaySmall
-                                    ?.copyWith(
-                                      color: const Color(0xFFC6C6C6D),
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                        height: 60,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF282828),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: CustomTaskDetails(task: task)),
                   );
                 },
               ),
@@ -159,13 +138,14 @@ class _TasksScreenState extends State<TasksScreen> {
               children: [
                 ElevatedButton.icon(
                   icon: Icon(Icons.add, size: 18),
-                  onPressed: () {
-                    Navigator.push(
+                  onPressed: () async {
+                    await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const AddTaskScreen(),
                       ),
                     );
+                    getData(); // Refresh the task list after adding a new task
                   },
                   label: Text('Add Task'),
                   style: ElevatedButton.styleFrom(
