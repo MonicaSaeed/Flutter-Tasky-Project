@@ -7,6 +7,8 @@ import 'home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensures binding is ready
   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  // await prefs.remove('username');
+
   final String? name = prefs.getString('username');
   runApp(MyApp(name: name));
 }
@@ -105,7 +107,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: name == null ? HomeScreen() : TasksScreen(name: name),
+      home: name == null ? HomeScreen() : TasksScreen(name: name!),
     );
   }
 }

@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky_project/core/components/custom_form_field.dart';
+import 'package:tasky_project/core/models/task_model.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -82,9 +86,27 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 SizedBox(height: 90),
                 ElevatedButton.icon(
                   icon: Icon(Icons.add, size: 18),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_key.currentState?.validate() ?? false) {
-                      // Add task logic here
+                      final SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      List<dynamic> tasks = [];
+                      String? existingTasks = prefs.getString('tasks');
+                      if (existingTasks != null) {
+                        tasks = jsonDecode(existingTasks);
+                      }
+                      TaskModel newTask = TaskModel(
+                        id: tasks.length + 1,
+                        name: taskNameController.text,
+                        description: taskDescriptionController.text,
+                        isHighPriority: isHighPriority,
+                      );
+                      tasks.add(newTask.toMap());
+                      String encodedTasks = jsonEncode(tasks);
+                      await prefs.setString('tasks', encodedTasks);
+                      taskNameController.clear();
+                      taskDescriptionController.clear();
+                      Navigator.pop(context);
                     }
                   },
                   label: Text('Add Task'),

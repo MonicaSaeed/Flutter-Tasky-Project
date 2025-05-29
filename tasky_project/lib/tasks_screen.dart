@@ -1,12 +1,41 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasky_project/core/models/task_model.dart';
 
 import 'add_task_screen.dart';
 
-class TasksScreen extends StatelessWidget {
-  final String? name;
+class TasksScreen extends StatefulWidget {
+  final String name;
+  const TasksScreen({super.key, required this.name});
 
-  const TasksScreen({super.key, this.name});
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<TaskModel> tasks = [];
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? tasksLocal = prefs.getString('tasks');
+    // print('tasks: $tasks');
+    final List<dynamic> taskList =
+        tasksLocal != null ? jsonDecode(tasksLocal) : [];
+    // print('taskList: $taskList');
+    tasks = taskList
+        .map((task) => TaskModel.fromMap(task as Map<String, dynamic>))
+        .toList();
+    print('taskssssss maaaaapppppp from tasks page : $tasks');
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +57,7 @@ class TasksScreen extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      'Good Evening ,$name',
+                      'Good Evening ,${widget.name}',
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
                     Text('One task at a time.One step closer.',
@@ -76,7 +105,55 @@ class TasksScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 600),
+            SizedBox(height: 24),
+            Text(
+              'My Tasks',
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+            SizedBox(height: 16),
+            SizedBox(
+              height: 400,
+              child: ListView.builder(
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  final task = tasks[index];
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Container(
+                      height: 60,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF282828),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                task.name,
+                                style: Theme.of(context).textTheme.displaySmall,
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                task.description,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displaySmall
+                                    ?.copyWith(
+                                      color: const Color(0xFFC6C6C6D),
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

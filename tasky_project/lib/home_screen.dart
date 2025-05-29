@@ -80,11 +80,16 @@ class HomeScreen extends StatelessWidget {
                       if (_key.currentState?.validate() ?? false) {
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
+                        await prefs.setString(
+                          'username',
+                          nameController.text,
+                        );
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                TasksScreen(name: nameController.text),
+                            builder: (context) => TasksScreen(
+                              name: nameController.text,
+                            ),
                           ),
                         );
                       }
