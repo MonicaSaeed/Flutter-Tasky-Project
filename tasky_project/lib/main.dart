@@ -60,6 +60,44 @@ class MyApp extends StatelessWidget {
             fontSize: 16,
           ),
         ),
+        switchTheme: SwitchThemeData(
+          trackColor: WidgetStateProperty.resolveWith(
+            (states) {
+              if (states.contains(WidgetState.selected)) {
+                return const Color(0xFF15B86C);
+              } else {
+                return const Color(0xFFFFFFFF);
+              }
+            },
+          ),
+          thumbColor: WidgetStateProperty.resolveWith(
+            (states) {
+              if (states.contains(WidgetState.selected)) {
+                return const Color(0xFFFFFFFF);
+              } else {
+                return const Color(0xFF9E9E9E);
+              }
+            },
+          ),
+          trackOutlineColor: WidgetStateProperty.resolveWith(
+            (states) {
+              if (states.contains(WidgetState.selected)) {
+                return Colors.transparent;
+              } else {
+                return const Color(0xFF9E9E9E);
+              }
+            },
+          ),
+          trackOutlineWidth: WidgetStateProperty.resolveWith(
+            (states) {
+              if (states.contains(WidgetState.selected)) {
+                return 0.0;
+              } else {
+                return 2.0;
+              }
+            },
+          ),
+        ),
       ),
       home: const HomeScreen(),
     );

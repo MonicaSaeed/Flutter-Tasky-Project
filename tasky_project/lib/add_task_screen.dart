@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tasky_project/core/components/custom_form_field.dart';
 
-class AddTaskScreen extends StatelessWidget {
+class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
 
+  @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  bool isHighPriority = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,12 +51,19 @@ class AddTaskScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'High Priority  ',
                   style: Theme.of(context).textTheme.displaySmall,
                 ),
-                SizedBox(width: 16),
+                Switch(
+                    value: isHighPriority,
+                    onChanged: (bool newValue) {
+                      setState(() {
+                        isHighPriority = newValue;
+                      });
+                    }),
               ],
             ),
             SizedBox(height: 90),
