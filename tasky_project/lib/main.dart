@@ -38,7 +38,6 @@ class MyApp extends StatelessWidget {
             backgroundColor: const Color(0xFF15B86C),
             foregroundColor: const Color(0xFFFFFFFF),
             fixedSize: Size(MediaQuery.of(context).size.width, 40),
-            // textStyle: Theme.of(context).textTheme.displaySmall, not effect??
             textStyle: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -50,7 +49,7 @@ class MyApp extends StatelessWidget {
           fillColor: const Color(0xFF282828),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
-            vertical: 16,
+            vertical: 18,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),

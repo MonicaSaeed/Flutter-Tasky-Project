@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tasky_project/core/components/custom_form_field.dart';
 import 'package:tasky_project/tasks_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -58,22 +59,10 @@ class HomeScreen extends StatelessWidget {
                 height: 205,
               ),
               SizedBox(height: 28),
-              Row(
-                children: [
-                  Text(
-                    'Full Name',
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                ],
-              ),
-              SizedBox(height: 8),
-              TextField(
-                cursorColor: const Color(0xFFFFFFFF),
-                style: Theme.of(context).textTheme.displaySmall,
-                decoration: const InputDecoration(
+              CustomFormField(
+                  title: 'Full Name',
                   hintText: 'e.g. Sarah Khalid',
-                ),
-              ),
+                  controller: TextEditingController()),
               SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () {

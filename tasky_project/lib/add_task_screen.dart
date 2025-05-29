@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasky_project/core/components/custom_form_field.dart';
 
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen({super.key});
@@ -28,32 +29,19 @@ class AddTaskScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 18),
-            Text(
-              'Task Name',
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-            SizedBox(height: 8),
-            TextField(
-              cursorColor: const Color(0xFFFFFFFF),
-              style: Theme.of(context).textTheme.displaySmall,
-              decoration: const InputDecoration(
-                hintText: 'Finish UI design for login screen',
-              ),
+            CustomFormField(
+              title: 'Task Name',
+              hintText: 'Finish UI design for login screen',
+              maxLines: 1,
+              controller: TextEditingController(),
             ),
             SizedBox(height: 20),
-            Text(
-              'Task Description',
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-            SizedBox(height: 8),
-            TextField(
-              cursorColor: const Color(0xFFFFFFFF),
-              style: Theme.of(context).textTheme.displaySmall,
+            CustomFormField(
+              title: 'Task Description',
+              hintText:
+                  'Finish onboarding UI and hand off to devs by Thursday.',
               maxLines: 5,
-              decoration: const InputDecoration(
-                hintText:
-                    'Finish onboarding UI and hand off to devs by Thursday.',
-              ),
+              controller: TextEditingController(),
             ),
             SizedBox(height: 20),
             Row(
