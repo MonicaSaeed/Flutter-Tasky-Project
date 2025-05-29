@@ -54,11 +54,12 @@ class AddTaskScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 90),
-            ElevatedButton(
+            ElevatedButton.icon(
+              icon: Icon(Icons.add, size: 18),
               onPressed: () {
                 // Add task logic here
               },
-              child: Text('Add Task'),
+              label: Text('Add Task'),
             ),
           ],
         ),

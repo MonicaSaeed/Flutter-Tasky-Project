@@ -78,7 +78,8 @@ class TasksScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ElevatedButton(
+                ElevatedButton.icon(
+                  icon: Icon(Icons.add, size: 18),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -87,7 +88,7 @@ class TasksScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text('Add Task'),
+                  label: Text('Add Task'),
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(160, 40),
                   ),
