@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tasky_project/tasks_screen.dart';
+import 'package:tasky_project/nav_main_screen.dart';
 
 import 'home_screen.dart';
 
@@ -106,8 +106,14 @@ class MyApp extends StatelessWidget {
             },
           ),
         ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Color(0xFF181818),
+          type: BottomNavigationBarType.fixed,
+          unselectedItemColor: Color(0xFFC6C6C6),
+          selectedItemColor: Color(0xFF15B86C),
+        ),
       ),
-      home: name == null ? HomeScreen() : TasksScreen(name: name!),
+      home: name == null ? HomeScreen() : NavMainScreen(name: name!),
     );
   }
 }

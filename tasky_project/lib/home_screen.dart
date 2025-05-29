@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky_project/core/components/custom_form_field.dart';
-import 'package:tasky_project/tasks_screen.dart';
+
+import 'nav_main_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -87,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => TasksScreen(
+                            builder: (context) => NavMainScreen(
                               name: nameController.text,
                             ),
                           ),
