@@ -6,11 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky_project/core/components/custom_task_details.dart';
 import 'package:tasky_project/core/models/task_model.dart';
 
-import 'add_task_screen.dart';
+import '../../core/constants/storage_key.dart';
+import '../../core/services/preferences_manager.dart';
+import '../add_tasks/add_task_screen.dart';
 
 class TasksScreen extends StatefulWidget {
-  final String name;
-  const TasksScreen({super.key, required this.name});
+  const TasksScreen({super.key});
 
   @override
   State<TasksScreen> createState() => _TasksScreenState();
@@ -58,7 +59,7 @@ class _TasksScreenState extends State<TasksScreen> {
                 Column(
                   children: [
                     Text(
-                      'Good Evening ,${widget.name}',
+                      'Good Evening ,${PreferencesManager().getString(StorageKey.username)}',
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
                     Text('One task at a time.One step closer.',

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tasky_project/profile_screen.dart';
-import 'package:tasky_project/tasks_screen.dart';
-import 'package:tasky_project/todo_screen.dart';
+import 'package:tasky_project/features/home/tasks_screen.dart';
+import 'package:tasky_project/features/profile/profile_screen.dart';
+import 'package:tasky_project/features/tasks/todo_screen.dart';
 
-import 'complete_screen.dart';
+import '../tasks/complete_screen.dart';
 
 class NavMainScreen extends StatefulWidget {
-  final String name;
-  NavMainScreen({super.key, required this.name});
+  NavMainScreen({super.key});
 
   @override
   State<NavMainScreen> createState() => _NavMainScreenState();
@@ -19,7 +18,7 @@ class _NavMainScreenState extends State<NavMainScreen> {
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
-      TasksScreen(name: widget.name),
+      TasksScreen(),
       TodoScreen(),
       CompleteScreen(),
       ProfileScreen(),

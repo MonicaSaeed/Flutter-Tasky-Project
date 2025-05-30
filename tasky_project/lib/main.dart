@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tasky_project/nav_main_screen.dart';
+import 'package:tasky_project/features/navigation/nav_main_screen.dart';
+import 'package:tasky_project/features/welcome/home_screen.dart';
 
-import 'home_screen.dart';
+import 'core/constants/storage_key.dart';
+import 'core/services/preferences_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensures binding is ready
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  // await prefs.remove('username');
+  await PreferencesManager().init(); // Initialize the singleton instance
+  await PreferencesManager().remove(StorageKey.username);
 
-  final String? name = prefs.getString('username');
-  runApp(MyApp(name: name));
+  final String? name = PreferencesManager().getString(StorageKey.username);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final String? name;
-  const MyApp({super.key, this.name});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,9 @@ class MyApp extends StatelessWidget {
           selectedItemColor: Color(0xFF15B86C),
         ),
       ),
-      home: name == null ? HomeScreen() : NavMainScreen(name: name!),
+      home: PreferencesManager().getString(StorageKey.username) == null
+          ? HomeScreen()
+          : NavMainScreen(),
     );
   }
 }

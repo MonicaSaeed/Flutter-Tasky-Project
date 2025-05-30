@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasky_project/core/components/custom_form_field.dart';
+import 'package:tasky_project/core/constants/storage_key.dart';
+import 'package:tasky_project/core/services/preferences_manager.dart';
 
-import 'nav_main_screen.dart';
+import '../navigation/nav_main_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -79,18 +80,15 @@ class HomeScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () async {
                       if (_key.currentState?.validate() ?? false) {
-                        final SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        await prefs.setString(
-                          'username',
-                          nameController.text,
-                        );
+                        await PreferencesManager().setString(
+                            StorageKey.username, nameController.text);
+                        String? name =
+                            PreferencesManager().getString(StorageKey.username);
+
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NavMainScreen(
-                              name: nameController.text,
-                            ),
+                            builder: (context) => NavMainScreen(),
                           ),
                         );
                       }
