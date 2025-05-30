@@ -63,10 +63,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
                     Text('One task at a time.One step closer.',
-                        style: Theme.of(context)
-                            .textTheme
-                            .displaySmall
-                            ?.copyWith(color: const Color(0xFFC6C6C6D))),
+                        style: Theme.of(context).textTheme.displaySmall),
                   ],
                 ),
                 SizedBox(width: 32),
@@ -75,7 +72,6 @@ class _TasksScreenState extends State<TasksScreen> {
                   height: 42,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFF282828),
                   ),
                   child: Center(
                     child: SvgPicture.asset(
@@ -125,7 +121,6 @@ class _TasksScreenState extends State<TasksScreen> {
                         height: 60,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF282828),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: CustomTaskDetails(task: task)),

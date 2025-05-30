@@ -18,9 +18,7 @@ class CustomTaskDetails extends StatelessWidget {
             SizedBox(height: 4),
             Text(
               task.description,
-              style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                    color: const Color(0xFFC6C6C6D),
-                  ),
+              style: Theme.of(context).textTheme.displaySmall,
             ),
           ],
         ),

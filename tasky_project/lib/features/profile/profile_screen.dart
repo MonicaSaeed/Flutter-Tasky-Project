@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/theme/theme_controller.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -17,6 +19,10 @@ class ProfileScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.displayLarge,
               ),
               SizedBox(height: 16),
+              Switch(
+                value: ThemeController.isDark(),
+                onChanged: (val) => ThemeController.toggleTheme(),
+              )
             ],
           ),
         ),
