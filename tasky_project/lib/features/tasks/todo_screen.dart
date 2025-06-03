@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tasky_project/features/tasks/tasks_controller.dart';
+
+import '../../core/components/task_list_widget.dart';
 
 class TodoScreen extends StatelessWidget {
   const TodoScreen({super.key});
@@ -7,18 +11,40 @@ class TodoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'To Do',
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'To Do Tasks',
                 style: Theme.of(context).textTheme.displayLarge,
               ),
-              SizedBox(height: 16),
-            ],
-          ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Consumer<TasksController>(
+                  builder: (context, tasksController, child) {
+                    return tasksController.isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              value: 20,
+                            ),
+                          )
+                        : TaskListWidget(
+                            tasks: tasksController.todoTasks,
+                            onTap: (value, id) {
+                              tasksController.changeTaskStatus(
+                                  id!, value ?? false);
+                            },
+                            emptyMessage: 'No Task Found',
+                          );
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

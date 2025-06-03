@@ -80,9 +80,14 @@ ThemeData darkTheme = ThemeData(
       color: Color(0xFFFFFFFF),
       fontWeight: FontWeight.w400,
     ),
+    headlineMedium: TextStyle(
+      fontSize: 18,
+      color: Color(0xFFFFFFFF),
+      fontWeight: FontWeight.w400,
+    ),
     displaySmall: TextStyle(
       fontSize: 16,
-      color: Color(0xFFFFFFFF),
+      color: Color(0xFFC6C6C6),
       fontWeight: FontWeight.w400,
     ),
   ),

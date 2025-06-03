@@ -6,7 +6,7 @@ class TaskModel {
   bool isCompleted;
 
   TaskModel({
-    required this.id,
+    this.id = 0,
     required this.name,
     required this.description,
     required this.isHighPriority,
@@ -30,6 +30,23 @@ class TaskModel {
       description: map['description'],
       isHighPriority: map['isHighPriority'],
       isCompleted: map['isCompleted'] ?? false,
+    );
+  }
+
+  // copy constructor to create a new instance with modified values
+  TaskModel copyWith({
+    int? id,
+    String? name,
+    String? description,
+    bool? isHighPriority,
+    bool? isCompleted,
+  }) {
+    return TaskModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      isHighPriority: isHighPriority ?? this.isHighPriority,
+      isCompleted: isCompleted ?? this.isCompleted,
     );
   }
 }

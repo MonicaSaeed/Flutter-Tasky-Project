@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tasky_project/features/navigation/nav_main_screen.dart';
 import 'package:tasky_project/features/welcome/home_screen.dart';
 
@@ -7,13 +8,19 @@ import 'core/services/preferences_manager.dart';
 import 'core/theme/dark_theme.dart';
 import 'core/theme/light_theme.dart';
 import 'core/theme/theme_controller.dart';
+import 'features/tasks/tasks_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensures binding is ready
   await PreferencesManager().init(); // Initialize the singleton instance
   // await PreferencesManager().remove(StorageKey.username);
   ThemeController().init();
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider<TasksController>(
+        create: (context) => TasksController()
+          ..init(), // final x = new TasksController(), x.init();
+        child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {

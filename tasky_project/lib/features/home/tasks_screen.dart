@@ -1,14 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tasky_project/core/components/custom_task_details.dart';
-import 'package:tasky_project/core/models/task_model.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/components/task_list_widget.dart';
 import '../../core/constants/storage_key.dart';
 import '../../core/services/preferences_manager.dart';
 import '../add_tasks/add_task_screen.dart';
+import '../tasks/tasks_controller.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
@@ -18,25 +16,9 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  List<TaskModel> tasks = [];
   @override
   void initState() {
     super.initState();
-    getData();
-  }
-
-  void getData() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? tasksLocal = prefs.getString('tasks');
-    // print('tasks: $tasks');
-    final List<dynamic> taskList =
-        tasksLocal != null ? jsonDecode(tasksLocal) : [];
-    // print('taskList: $taskList');
-    tasks = taskList
-        .map((task) => TaskModel.fromMap(task as Map<String, dynamic>))
-        .toList();
-    print('taskssssss maaaaapppppp from tasks page : $tasks');
-    setState(() {});
   }
 
   @override
@@ -55,7 +37,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   width: 42,
                   height: 42,
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Column(
                   children: [
                     Text(
@@ -103,45 +85,42 @@ class _TasksScreenState extends State<TasksScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(
               'My Tasks',
               style: Theme.of(context).textTheme.displayMedium,
             ),
-            SizedBox(height: 16),
-            SizedBox(
-              height: 400,
-              child: ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  final task = tasks[index];
-                  return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: Container(
-                        height: 60,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: CustomTaskDetails(task: task)),
-                  );
-                },
-              ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: Consumer<TasksController>(
+                  builder: (context, tasksController, child) {
+                return tasksController.isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                        value: 20,
+                      ))
+                    : TaskListWidget(
+                        tasks: tasksController.tasks,
+                        onTap: (value, id) {
+                          tasksController.changeTaskStatus(id!, value ?? false);
+                        },
+                        emptyMessage: 'No Task Found',
+                      );
+              }),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton.icon(
                   icon: Icon(Icons.add, size: 18),
-                  onPressed: () async {
-                    await Navigator.push(
+                  onPressed: () {
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const AddTaskScreen(),
                       ),
                     );
-                    getData(); // Refresh the task list after adding a new task
                   },
                   label: Text('Add Task'),
                   style: ElevatedButton.styleFrom(

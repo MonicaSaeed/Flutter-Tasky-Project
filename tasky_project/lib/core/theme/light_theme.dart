@@ -81,9 +81,14 @@ ThemeData lightTheme = ThemeData(
       color: Color(0xFF161F1B),
       fontWeight: FontWeight.w400,
     ),
+    headlineMedium: TextStyle(
+      fontSize: 18,
+      color: Color(0xFF161F1B),
+      fontWeight: FontWeight.w400,
+    ),
     displaySmall: TextStyle(
       fontSize: 16,
-      color: Color(0xFF161F1B),
+      color: Color(0xFF3A4640),
       fontWeight: FontWeight.w400,
     ),
   ),

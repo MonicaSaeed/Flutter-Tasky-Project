@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 import 'package:tasky_project/core/components/custom_form_field.dart';
 import 'package:tasky_project/core/models/task_model.dart';
+import 'package:tasky_project/features/tasks/tasks_controller.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -88,28 +87,24 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   icon: Icon(Icons.add, size: 18),
                   onPressed: () async {
                     if (_key.currentState?.validate() ?? false) {
-                      final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      List<dynamic> tasks = [];
-                      String? existingTasks = prefs.getString('tasks');
-                      if (existingTasks != null) {
-                        tasks = jsonDecode(existingTasks);
-                      }
                       TaskModel newTask = TaskModel(
-                        id: tasks.length + 1,
                         name: taskNameController.text,
                         description: taskDescriptionController.text,
                         isHighPriority: isHighPriority,
                       );
-                      tasks.add(newTask.toMap());
-                      String encodedTasks = jsonEncode(tasks);
-                      await prefs.setString('tasks', encodedTasks);
+
+                      await Provider.of<TasksController>(context, listen: false)
+                          .addTask(
+                              newTask); // Assuming you have an addTask method
                       taskNameController.clear();
                       taskDescriptionController.clear();
-                      Navigator.pop(context);
+                      // if pop before add task, don't pop gain using Navigator.pop(context)
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                      }
                     }
                   },
-                  label: Text('Add Task'),
+                  label: const Text('Add Task'),
                 ),
               ],
             ),
