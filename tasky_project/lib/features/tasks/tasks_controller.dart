@@ -70,4 +70,13 @@ class TasksController with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> deleteTask(int id) async {
+    tasks.removeWhere((task) => task.id == id);
+    final taskMap = tasks.map((e) => e.toMap()).toList();
+    await PreferencesManager().setString(StorageKey.tasks, jsonEncode(taskMap));
+    loadCompletedTasks();
+    loadTodoTasks();
+    notifyListeners();
+  }
 }
