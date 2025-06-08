@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                         width: 42,
                         height: 42,
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Text(
                         'Tasky',
                         style: Theme.of(
@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 108),
+                  const SizedBox(height: 108),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -53,18 +53,18 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     'Your productivity journey starts here.',
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   SvgPicture.asset(
                     'assets/images/pana.svg',
                     width: 215,
                     height: 205,
                   ),
-                  SizedBox(height: 28),
+                  const SizedBox(height: 28),
                   CustomFormField(
                     title: 'Full Name',
                     hintText: 'e.g. Sarah Khalid',
@@ -76,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: () async {
                       if (_key.currentState?.validate() ?? false) {
@@ -85,15 +85,17 @@ class HomeScreen extends StatelessWidget {
                         String? name =
                             PreferencesManager().getString(StorageKey.username);
 
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => NavMainScreen(),
-                          ),
-                        );
+                        if (context.mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NavMainScreen(),
+                            ),
+                          );
+                        }
                       }
                     },
-                    child: Text('Let’s Get Started'),
+                    child: const Text('Let’s Get Started'),
                   ),
                 ],
               ),

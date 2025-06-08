@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:tasky_project/features/home/wedgits/analysis_achived_tasks.dart';
 
 import '../../core/components/task_list_widget.dart';
 import '../../core/constants/storage_key.dart';
@@ -77,7 +78,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   'almost done ! ',
                   style: Theme.of(context).textTheme.displayMedium,
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 SvgPicture.asset(
                   'assets/images/waving-hand.svg',
                   width: 32,
@@ -85,7 +86,9 @@ class _TasksScreenState extends State<TasksScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
+            const AnalysisAchievedTasks(),
+            const SizedBox(height: 8),
             Text(
               'My Tasks',
               style: Theme.of(context).textTheme.displayMedium,

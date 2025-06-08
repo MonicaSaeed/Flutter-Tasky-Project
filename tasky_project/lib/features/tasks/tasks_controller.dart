@@ -14,6 +14,11 @@ class TasksController with ChangeNotifier {
   int totalDoneTasks = 0;
   int get totalTasks => tasks.length;
 
+  double get percent {
+    if (totalTasks == 0) return 0.0;
+    return totalDoneTasks / totalTasks;
+  }
+
   init() async {
     await loadTasks();
     loadCompletedTasks();
