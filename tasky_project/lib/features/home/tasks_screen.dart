@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky_project/features/home/wedgits/analysis_achived_tasks.dart';
+import 'package:tasky_project/features/home/wedgits/high_priority_tasks.dart';
 
 import '../../core/components/task_list_widget.dart';
 import '../../core/constants/storage_key.dart';
@@ -30,7 +31,7 @@ class _TasksScreenState extends State<TasksScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 70),
+            const SizedBox(height: 70),
             Row(
               children: [
                 SvgPicture.asset(
@@ -49,11 +50,11 @@ class _TasksScreenState extends State<TasksScreen> {
                         style: Theme.of(context).textTheme.displaySmall),
                   ],
                 ),
-                SizedBox(width: 32),
+                const SizedBox(width: 32),
                 Container(
                   width: 42,
                   height: 42,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -66,12 +67,12 @@ class _TasksScreenState extends State<TasksScreen> {
                 )
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'Yuhuu ,Your work Is',
               style: Theme.of(context).textTheme.displayMedium,
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Row(
               children: [
                 Text(
@@ -89,6 +90,12 @@ class _TasksScreenState extends State<TasksScreen> {
             const SizedBox(height: 16),
             const AnalysisAchievedTasks(),
             const SizedBox(height: 8),
+            Consumer<TasksController>(
+              builder: (context, tasksController, child) {
+                return const HighPriorityTasksWidget();
+              },
+            ),
+            const SizedBox(height: 16),
             Text(
               'My Tasks',
               style: Theme.of(context).textTheme.displayMedium,
@@ -111,12 +118,12 @@ class _TasksScreenState extends State<TasksScreen> {
                       );
               }),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton.icon(
-                  icon: Icon(Icons.add, size: 18),
+                  icon: const Icon(Icons.add, size: 18),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -125,9 +132,9 @@ class _TasksScreenState extends State<TasksScreen> {
                       ),
                     );
                   },
-                  label: Text('Add Task'),
+                  label: const Text('Add Task'),
                   style: ElevatedButton.styleFrom(
-                    fixedSize: Size(160, 40),
+                    fixedSize: const Size(160, 40),
                   ),
                 ),
               ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/task_model.dart';
+import '../../features/tasks/task_model.dart';
 import '../theme/theme_controller.dart';
 import 'custom_check_box.dart';
 
