@@ -79,4 +79,19 @@ class TasksController with ChangeNotifier {
     loadTodoTasks();
     notifyListeners();
   }
+
+  Future<void> editTask(TaskModel task) async {
+    final taskIndex = tasks.indexWhere((t) => t.id == task.id);
+    if (taskIndex != -1) {
+      tasks[taskIndex] = task;
+      final taskMap = tasks.map((e) => e.toMap()).toList();
+      await PreferencesManager().setString(
+        StorageKey.tasks,
+        jsonEncode(taskMap),
+      );
+      loadCompletedTasks();
+      loadTodoTasks();
+      notifyListeners();
+    }
+  }
 }

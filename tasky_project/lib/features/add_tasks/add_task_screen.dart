@@ -27,24 +27,23 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           child: Form(
             key: _key,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_back, color: Colors.white),
+                      icon: const Icon(Icons.arrow_back),
                       onPressed: () {
                         Navigator.pop(context);
                       },
                     ),
-                    SizedBox(width: 4),
+                    const SizedBox(width: 4),
                     Text(
                       'New Task',
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
                   ],
                 ),
-                SizedBox(height: 18),
+                const SizedBox(height: 18),
                 CustomFormField(
                   title: 'Task Name',
                   hintText: 'Finish UI design for login screen',
@@ -57,7 +56,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 CustomFormField(
                   title: 'Task Description',
                   hintText:
@@ -65,7 +64,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   maxLines: 5,
                   controller: taskDescriptionController,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -82,9 +81,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         }),
                   ],
                 ),
-                SizedBox(height: 90),
+                const SizedBox(height: 90),
                 ElevatedButton.icon(
-                  icon: Icon(Icons.add, size: 18),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 56),
+                  ),
+                  icon: const Icon(Icons.add, size: 24),
                   onPressed: () async {
                     if (_key.currentState?.validate() ?? false) {
                       TaskModel newTask = TaskModel(
