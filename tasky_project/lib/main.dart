@@ -8,18 +8,23 @@ import 'core/services/preferences_manager.dart';
 import 'core/theme/dark_theme.dart';
 import 'core/theme/light_theme.dart';
 import 'core/theme/theme_controller.dart';
+import 'features/profile/user_controller.dart';
 import 'features/tasks/tasks_controller.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensures binding is ready
-  await PreferencesManager().init(); // Initialize the singleton instance
-  // await PreferencesManager().remove(StorageKey.username);
+  WidgetsFlutterBinding.ensureInitialized();
+  await PreferencesManager().init();
   ThemeController().init();
+
   runApp(
-    ChangeNotifierProvider<TasksController>(
-        create: (context) => TasksController()
-          ..init(), // final x = new TasksController(), x.init();
-        child: MyApp()),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => TasksController()..init()),
+        ChangeNotifierProvider(
+            create: (_) => UserController()), // your second provider
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 

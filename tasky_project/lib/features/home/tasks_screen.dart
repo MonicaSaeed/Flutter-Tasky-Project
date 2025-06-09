@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -5,9 +7,8 @@ import 'package:tasky_project/features/home/wedgits/analysis_achived_tasks.dart'
 import 'package:tasky_project/features/home/wedgits/high_priority_tasks.dart';
 
 import '../../core/components/task_list_widget.dart';
-import '../../core/constants/storage_key.dart';
-import '../../core/services/preferences_manager.dart';
 import '../add_tasks/add_task_screen.dart';
+import '../profile/user_controller.dart';
 import '../tasks/tasks_controller.dart';
 
 class TasksScreen extends StatefulWidget {
@@ -34,37 +35,33 @@ class _TasksScreenState extends State<TasksScreen> {
             const SizedBox(height: 70),
             Row(
               children: [
-                SvgPicture.asset(
-                  'assets/images/logo.svg',
-                  width: 42,
-                  height: 42,
+                Selector<UserController, String?>(
+                  selector: (context, UserController controller) =>
+                      controller.userImagePath,
+                  builder: (BuildContext context, String? userImagePath,
+                      Widget? child) {
+                    return CircleAvatar(
+                      backgroundImage: userImagePath == null
+                          ? const AssetImage('assets/images/default_user.jpg')
+                          : FileImage(File(userImagePath)),
+                    );
+                  },
                 ),
                 const SizedBox(width: 8),
                 Column(
                   children: [
-                    Text(
-                      'Good Evening ,${PreferencesManager().getString(StorageKey.username)}',
-                      style: Theme.of(context).textTheme.displayMedium,
+                    Consumer<UserController>(
+                      builder: (context, userController, _) {
+                        return Text(
+                          'Good Evening, ${userController.username}',
+                          style: Theme.of(context).textTheme.displayMedium,
+                        );
+                      },
                     ),
                     Text('One task at a time.One step closer.',
                         style: Theme.of(context).textTheme.displaySmall),
                   ],
                 ),
-                const SizedBox(width: 32),
-                Container(
-                  width: 42,
-                  height: 42,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      'assets/images/Icon.svg',
-                      width: 24,
-                      height: 24,
-                    ),
-                  ),
-                )
               ],
             ),
             const SizedBox(height: 16),

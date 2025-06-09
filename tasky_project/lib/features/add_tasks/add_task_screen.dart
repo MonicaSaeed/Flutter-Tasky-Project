@@ -84,7 +84,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 const SizedBox(height: 90),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 56),
+                    minimumSize: const Size(double.infinity, 40),
                   ),
                   icon: const Icon(Icons.add, size: 24),
                   onPressed: () async {

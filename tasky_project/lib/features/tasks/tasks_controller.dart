@@ -94,4 +94,13 @@ class TasksController with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> clearTasks() async {
+    tasks.clear();
+    completedTasks.clear();
+    todoTasks.clear();
+    totalDoneTasks = 0;
+    await PreferencesManager().remove(StorageKey.tasks);
+    notifyListeners();
+  }
 }

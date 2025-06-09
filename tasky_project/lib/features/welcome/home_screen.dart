@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:tasky_project/core/components/custom_form_field.dart';
 import 'package:tasky_project/core/constants/storage_key.dart';
 import 'package:tasky_project/core/services/preferences_manager.dart';
 
 import '../navigation/nav_main_screen.dart';
+import '../profile/user_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -82,8 +84,9 @@ class HomeScreen extends StatelessWidget {
                       if (_key.currentState?.validate() ?? false) {
                         await PreferencesManager().setString(
                             StorageKey.username, nameController.text);
-                        String? name =
-                            PreferencesManager().getString(StorageKey.username);
+                        final userController =
+                            Provider.of<UserController>(context, listen: false);
+                        await userController.setUserName(nameController.text);
 
                         if (context.mounted) {
                           Navigator.pushReplacement(
